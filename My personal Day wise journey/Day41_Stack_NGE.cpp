@@ -1,34 +1,40 @@
-#include <bits/stdc++.h> 
-using namespace std; 
+#include <bits/stdc++.h>
+using namespace std;
 
-void printNGE(int arr[], int n) { 
-stack < int > s; 
-s.push(arr[0]); 
-
-for (int i = 1; i < n; i++) { 
-
-	if (s.empty()) { 
-	s.push(arr[i]); 
-	continue; 
-	} 
-
-	while (s.empty() == false && s.top() < arr[i]) 
-	{		 
-		cout << s.top() << " --> " << arr[i] << endl; 
-		s.pop(); 
-	} 
-
-	s.push(arr[i]); 
-} 
-
-while (s.empty() == false) { 
-	cout << s.top() << " --> " << -1 << endl; 
-	s.pop(); 
-} 
-} 
-int main() { 
-int arr[] = {11, 13, 21, 3}; 
-int n = sizeof(arr) / sizeof(arr[0]); 
-printNGE(arr, n); 
-return 0; 
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t--){
+	   int n;
+	   cin>>n;
+	   vector<long long int> arr(n);
+	   for(int i=0;i<n;i++)
+	       cin>> arr[i];
+	   stack<long long int> s;
+	   for(long int i=n-1;i>=0;i--){
+	       if(s.empty()){
+	           arr.push_back(-1);
+	           s.push(arr[i]);
+	           continue;
+	       }
+	       if(!s.empty() && s.top() > arr[i]){
+	           arr.push_back(s.top());
+	           s.push(arr[i]);
+	       }
+	       else if(!s.empty() && s.top() < arr[i]){
+	           while(!s.empty() && s.top() < arr[i])
+	               s.pop();
+	           if(s.empty()) arr.push_back(-1);
+	           else arr.push_back(s.top());
+	           s.push(arr[i]);
+	       }
+	   }
+	   reverse(arr.begin(), arr.end());
+	   for(int i =0; i<n;i++)
+	      cout<< arr[i] <<" ";
+	    cout<<"\n";
+	    
+	}
+	return 0;
 }
